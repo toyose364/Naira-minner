@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Naira Mine | Premium Gold Mining</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0a0a, #000000);
+            color: #e6c87c;
+            min-height: 100vh;
+            padding: 0 16px 32px 16px;
+        }
+
+        /* Gold & Black theme */
+        :root {
+            --gold: #f5b81b;
+            --gold-dark: #b87c00;
+            --black: #0e0e0e;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --border-glow: rgba(245, 184, 27, 0.4);
+        }
+
+        /* container */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 48px 48px 32px 32px;
+            padding: 20px 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,215,0,0.2);
+            border: 1px solid rgba(245, 184, 27, 0.3);
+        }
+
+        /* header & admin secret */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #f9d976, #f39f06);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+        .admin-secret {
+            background: #1f1a0c;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.6rem;
+            color: var(--gold);
+            cursor: pointer;
+            border: 1px solid var(--gold);
+            transition: 0.2s;
+        }
+
+        /* nav tabs */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0 20px;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #1e1b14;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: #e6c87c;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 8px gold;
+        }
+        .page {
+            display: none;
+            animation: fade 0.2s ease;
+        }
+        .active-page {
+            display: block;
+        }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; }}
+
+        /* cards & buttons */
+        .card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid rgba(245,184,27,0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #f5b81b, #d48d00);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+        input, textarea, select {
+            background: #121212;
+            border: 1px solid #5e4a1a;
+            padding: 12px;
+            border-radius: 28px;
+            width: 100%;
+            margin: 8px 0;
+            color: #ffecb3;
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .miner-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 8px 4px 20px;
+        }
+        .miner-card {
+            min-width: 85%;
+            scroll-snap-align: start;
+            background: #14100a;
+            border-radius: 32px;
+            padding: 18px;
+            border-left: 6px solid gold;
+        }
+        .countdown {
+            font-family: monospace;
+            font-size: 1.2rem;
+            background: #00000080;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 60px;
+        }
+        .bell-icon {
+            font-size: 1.8rem;
+            cursor: pointer;
+            margin-right: 8px;
+            display: inline-block;
+        }
+        .whatsapp-link {
+            color: #25D366;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #f5b81b40;
+            text-align: left;
+        }
+        .status-pending { color: #ffaa33; }
+        .status-approved { color: #2ecc71; }
+        .status-declined { color: #e74c3c; }
+        .admin-panel {
+            background: #0f0e0a;
+            border-radius: 28px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        @media (max-width: 550px) {
+            .container { padding: 14px; }
+            .tab-btn { padding: 6px 12px; font-size: 0.75rem; }
+        }
+        .error-msg {
+            background: #8b0000aa;
+            color: white;
+            padding: 8px;
+            border-radius: 20px;
+            margin: 8px 0;
+        }
+        .copy-btn {
+            background: #2c2b1f;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="appRoot">
+    <div class="top-bar">
+        <div class="logo">⛏️ NAIRA MINE</div>
+        <div class="admin-secret" id="adminSecretTap">A</div>
+    </div>
+    <!-- Auth Forms (Login/Signup) -->
+    <div id="authSection">
+        <div class="card" id="loginForm">
+            <h2>🔐 Sign In</h2>
+            <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+            <input type="password" id="loginPassword" placeholder="6-digit password" maxlength="6">
+            <button class="btn-gold" id="doLogin">Login</button>
+            <p style="margin-top:12px">No account? <span id="showSignup" style="color:gold; cursor:pointer;">Sign Up</span></p>
+            <div class="flex-between" style="margin-top:12px"><a href="#" id="customerCareLogin" class="whatsapp-link">📞 Customer Care</a> <a href="#" id="waCommunityLogin" class="whatsapp-link">💬 WhatsApp Community</a></div>
+        </div>
+        <div class="card" id="signupForm" style="display:none;">
+            <h2>✨ Create Account</h2>
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="6-digit password" maxlength="6">
+            <input type="password" id="confirmPwd" placeholder="Confirm password">
+            <button class="btn-gold" id="doSignup">Sign Up</button>
+            <p style="margin-top:12px">Already have an account? <span id="showLogin" style="color:gold; cursor:pointer;">Login</span></p>
+            <div class="flex-between" style="margin-top:12px"><a href="#" id="customerCareSignup" class="whatsapp-link">📞 Customer Care</a> <a href="#" id="waCommunitySignup" class="whatsapp-link">💬 WhatsApp Community</a></div>
+        </div>
+    </div>
+
+    <!-- Main App (after login) -->
+    <div id="mainApp" style="display:none;">
+        <div class="nav-tabs">
+            <button class="tab-btn" data-page="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-page="mining">⛏️ Mining</button>
+            <button class="tab-btn" data-page="deposit">💰 Deposit</button>
+            <button class="tab-btn" data-page="withdrawal">💸 Withdraw</button>
+            <button class="tab-btn" data-page="history">📜 History</button>
+            <button class="tab-btn" data-page="referrals">👥 Referrals</button>
+            <button class="tab-btn" data-page="leaderboard">🏆 Leaderboard</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="page">
+            <div class="card">
+                <h3>📈 Mined Gold: <span id="goldBalance">0</span> G</h3>
+                <h3>🇳🇬 Naira Balance: ₦<span id="nairaBalance">0.00</span></h3>
+                <p>💰 1 Gold = ₦0.30</p>
+            </div>
+        </div>
+
+        <!-- Mining (slider 5 miners) -->
+        <div id="mining" class="page">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span class="bell-icon" id="bellInfo">🔔</span><span id="bellText" style="font-style:italic"></span>
+            </div>
+            <div class="miner-slider" id="minerSlider"></div>
+        </div>
+
+        <!-- Deposit -->
+        <div id="deposit" class="page">
+            <div class="card">
+                <p><strong>🏦 Palmpay Account:</strong> 8036260556 <br> Lydia James</p>
+                <button class="btn-gold copy-btn" id="copyAccountBtn">📋 Copy Details</button>
+                <p>💰 Minimum deposit: ₦450 NGN</p>
+                <input type="number" id="depositAmount" placeholder="Amount (₦)" min="450">
+                <input type="file" id="depositReceipt" accept="image/*">
+                <button class="btn-gold" id="submitDepositBtn">📤 Process Deposit</button>
+                <div class="flex-between" style="margin-top:12px"><a href="#" id="customerCareDeposit" class="whatsapp-link">📞 Customer Care</a> <a href="#" id="waCommunityDeposit" class="whatsapp-link">💬 WhatsApp Community</a></div>
+            </div>
+        </div>
+
+        <!-- Withdrawal -->
+        <div id="withdrawal" class="page">
+            <div class="card">
+                <h3>💸 Withdraw Gold (Min: 1000 Gold = ₦300)</h3>
+                <input type="text" id="bankName" placeholder="Bank Name">
+                <input type="text" id="accountNumber" placeholder="Account Number">
+                <input type="text" id="accountName" placeholder="Account Name">
+                <button class="btn-gold" id="processWithdrawalBtn">Process Withdrawal</button>
+                <div class="flex-between" style="margin-top:12px"><a href="#" id="customerCareWithdraw" class="whatsapp-link">📞 Customer Care</a> <a href="#" id="waCommunityWithdraw" class="whatsapp-link">💬 WhatsApp Community</a></div>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div id="history" class="page">
+            <div class="card"><h3>Withdrawals</h3><div id="withdrawHistoryList"></div></div>
+            <div class="card"><h3>Deposits</h3><div id="depositHistoryList"></div></div>
+        </div>
+
+        <!-- Referrals -->
+        <div id="referrals" class="page">
+            <div class="card">
+                <p>🔗 Your Referral Link: <strong id="refLink"></strong> <button class="copy-btn" id="copyRefLink">Copy</button></p>
+                <p>👥 Total Referrals: <span id="totalReferrals">0</span></p>
+                <p>💰 Referral Earnings (10% of 1st deposit): <span id="refEarnings">0</span> Gold</p>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="leaderboard" class="page">
+            <div style="background: #1f1a0c; padding: 12px; border-radius: 20px; margin-bottom: 12px; text-align:center; font-weight:bold;">Do you need a website??, contact Praise on WhatsApp today +234 901 688 4934</div>
+            <div class="card"><table id="leaderboardTable"><thead><tr><th>Rank</th><th>User</th><th>Gold</th></tr></thead><tbody></tbody></table></div>
+        </div>
+    </div>
+    <!-- Admin Modal -->
+    <div id="adminModal" style="display:none; position:fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;">
+        <div class="card" style="max-width:90%; width:400px;"><h3>Admin Access</h3><input type="password" id="adminCode" placeholder="Enter 4-digit code"><button id="verifyAdminBtn" class="btn-gold">Verify</button><button id="closeAdminModal" style="margin-left:8px;">Close</button></div>
+    </div>
+    <div id="adminPanel" style="display:none; position:fixed; top:10%; left:5%; width:90%; background:#000000dd; border:2px solid gold; border-radius:28px; padding:20px; z-index:1001; max-height:80vh; overflow:auto;">
+        <h2>🛠️ Admin Panel</h2><p>Total Users: <span id="adminTotalUsers">0</span></p>
+        <h3>📸 Deposit Receipts Pending</h3><div id="adminDepositsList"></div>
+        <h3>🏦 Withdrawal Requests</h3><div id="adminWithdrawalsList"></div>
+        <button id="closeAdminPanelBtn" class="btn-outline">Close</button>
+    </div>
+</div>
+<script>
+    // ---------- STORAGE KEYS ----------
+    let users = JSON.parse(localStorage.getItem('nairamine_users')) || {};     // email: {password, gold, totalRefs, refEarnings, referralsList, referralCode, miners: [active, lastClaimTimestamps], depositHistory, withdrawalHistory }
+    let sessions = { currentUser: null };
+    let pendingDeposits = JSON.parse(localStorage.getItem('nairamine_pendingDeposits')) || []; // each {id, email, amount, receiptUrl, status}
+    let pendingWithdrawals = JSON.parse(localStorage.getItem('nairamine_pendingWithdrawals')) || []; // {id, email, bank, accNo, accName, amountGold, status}
+    let leaderboardCache = [];
+
+    // Helper functions
+    function saveUsers() { localStorage.setItem('nairamine_users', JSON.stringify(users)); }
+    function savePendingDeposits() { localStorage.setItem('nairamine_pendingDeposits', JSON.stringify(pendingDeposits)); }
+    function savePendingWithdrawals() { localStorage.setItem('nairamine_pendingWithdrawals', JSON.stringify(pendingWithdrawals)); }
+
+    function initUserData(email, pwd) {
+        if(!users[email]) {
+            users[email] = {
+                password: pwd,
+                gold: 0,
+                totalReferrals: 0,
+                referralEarnings: 0,
+                referralsList: [],
+                referralCode: btoa(email).slice(0,12),
+                miners: [
+                    { active: false, lastClaim: null, level:0, claimAmount:200, cost:1500 },
+                    { active: false, lastClaim: null, level:1, claimAmount:400, cost:2000 },
+                    { active: false, lastClaim: null, level:2, claimAmount:600, cost:2500 },
+                    { active: false, lastClaim: null, level:3, claimAmount:800, cost:3000 },
+                    { active: false, lastClaim: null, level:4, claimAmount:1000, cost:3500 }
+                ],
+                depositHistory: [],
+                withdrawalHistory: []
+            };
+            saveUsers();
+        }
+    }
+
+    function updateGoldUI() { if(sessions.currentUser) { let g = users[sessions.currentUser].gold; document.getElementById('goldBalance').innerText = g; document.getElementById('nairaBalance').innerText = (g * 0.30).toFixed(2); } }
+    function saveAndUpdate() { saveUsers(); updateGoldUI(); renderReferrals(); renderHistory(); updateLeaderboard(); renderMinerCards(); }
+
+    // Leaderboard top 10
+    function updateLeaderboard() {
+        let arr = Object.entries(users).map(([email, data]) => ({email, gold: data.gold}));
+        arr.sort((a,b)=>b.gold - a.gold);
+        let top10 = arr.slice(0,10);
+        let tbody = document.querySelector('#leaderboardTable tbody');
+        if(tbody) {
+            tbody.innerHTML = '';
+            top10.forEach((u,idx) => { let row = `<tr><td>${idx+1}</td><td>${u.email.substring(0,12)}</td><td>${u.gold}</td></tr>`; tbody.innerHTML += row; });
+        }
+    }
+
+    // Referral link generation
+    function getReferralLink() { if(sessions.currentUser) return `${window.location.origin}${window.location.pathname}?ref=${users[sessions.currentUser].referralCode}`; return ''; }
+    function renderReferrals() {
+        if(sessions.currentUser) {
+            let u = users[sessions.currentUser];
+            document.getElementById('refLink').innerText = getReferralLink();
+            document.getElementById('totalReferrals').innerText = u.totalReferrals || 0;
+            document.getElementById('refEarnings').innerText = u.referralEarnings || 0;
+        }
+    }
+    function handleReferralSignup(refCode, newEmail) {
+        let inviter = Object.entries(users).find(([em,data]) => data.referralCode === refCode);
+        if(inviter && inviter[0] !== newEmail) {
+            // will be processed after first deposit (bonus 10% of first deposit)
+            if(!users[newEmail].referredBy) users[newEmail].referredBy = inviter[0];
+            saveUsers();
+        }
+    }
+    function awardReferralBonus(referredEmail, depositAmountNaira) {
+        let refBy = users[referredEmail]?.referredBy;
+        if(refBy && users[refBy]) {
+            let bonusGold = (depositAmountNaira / 0.30) * 0.10; // 10% of deposit gold value
+            users[refBy].gold += bonusGold;
+            users[refBy].referralEarnings = (users[refBy].referralEarnings || 0) + bonusGold;
+            users[refBy].totalReferrals = (users[refBy].totalReferrals || 0) + 1;
+            if(!users[refBy].referralsList.includes(referredEmail)) users[refBy].referralsList.push(referredEmail);
+            saveUsers();
+        }
+    }
+
+    // deposit & admin approvals
+    function sendToWhatsAppGroup(msg) {
+        let encoded = encodeURIComponent(msg);
+        window.open(`https://chat.whatsapp.com/FnXLs9noqNC2PeSiMctYrQ?text=${encoded}`, '_blank');
+    }
+    function submitDeposit(email, amount, receiptDataUrl) {
+        let id = Date.now() + Math.random();
+        pendingDeposits.push({ id, email, amount, receipt: receiptDataUrl, status: 'pending' });
+        savePendingDeposits();
+        sendToWhatsAppGroup(`💰 NEW DEPOSIT: ${email} requests ₦${amount}. Approve/Decline via Admin Panel.`);
+        alert("Deposit receipt sent! Pending admin approval.");
+    }
+    function submitWithdrawal(email, bank, accNo, accName, goldAmount) {
+        let id = Date.now() + Math.random();
+        pendingWithdrawals.push({ id, email, bank, accNo, accName, goldAmount, status: 'pending' });
+        savePendingWithdrawals();
+        sendToWhatsAppGroup(`💸 WITHDRAWAL: ${email} requests ${goldAmount} Gold (≈₦${goldAmount*0.3}). Bank:${bank} Acct:${accNo}`);
+        alert("Withdrawal request sent! Pending approval.");
+    }
+    function approveDeposit(id) {
+        let dep = pendingDeposits.find(d=>d.id==id);
+        if(dep && dep.status==='pending') {
+            dep.status = 'approved';
+            let goldEarned = dep.amount / 0.30;
+            if(users[dep.email]) { users[dep.email].gold += goldEarned; users[dep.email].depositHistory.push({amount:dep.amount, gold:goldEarned, date:new Date().toISOString(), status:'approved'}); 
+            awardReferralBonus(dep.email, dep.amount); }
+            saveUsers(); savePendingDeposits(); saveAndUpdate(); renderAdminPanel(); renderHistory();
+        }
+    }
+    function declineDeposit(id) { let dep = pendingDeposits.find(d=>d.id==id); if(dep && dep.status==='pending') { dep.status='declined'; if(users[dep.email]) users[dep.email].depositHistory.push({amount:dep.amount, status:'declined', date:new Date().toISOString()}); savePendingDeposits(); saveUsers(); renderHistory(); renderAdminPanel();} }
+    function approveWithdrawal(id) { let wd = pendingWithdrawals.find(w=>w.id==id); if(wd && wd.status==='pending') { wd.status='approved'; if(users[wd.email]) { users[wd.email].gold -= wd.goldAmount; users[wd.email].withdrawalHistory.push({amount:wd.goldAmount, bank:wd.bank, status:'approved', date:new Date()}); saveUsers(); } savePendingWithdrawals(); saveAndUpdate(); renderHistory(); renderAdminPanel();} }
+    function declineWithdrawal(id) { let wd = pendingWithdrawals.find(w=>w.id==id); if(wd && wd.status==='pending') { wd.status='declined'; if(users[wd.email]) users[wd.email].withdrawalHistory.push({amount:wd.goldAmount, bank:wd.bank, status:'declined', date:new Date()}); savePendingWithdrawals(); saveUsers(); renderHistory(); renderAdminPanel();} }
+
+    function renderHistory() {
+        if(!sessions.currentUser) return;
+        let u = users[sessions.currentUser];
+        let wh = u.withdrawalHistory || [];
+        let dh = u.depositHistory || [];
+        document.getElementById('withdrawHistoryList').innerHTML = wh.map(w=>`<div>${w.amount} Gold - ${w.status} - ${new Date(w.date).toLocaleString()}</div>`).join('')||'none';
+        document.getElementById('depositHistoryList').innerHTML = dh.map(d=>`<div>₦${d.amount} - ${d.status} ${d.gold?`(+${d.gold} Gold)`:''}</div>`).join('')||'none';
+    }
+
+    // Mining slider logic
+    function renderMinerCards() {
+        let user = users[sessions.currentUser];
+        let miners = user.miners;
+        let container = document.getElementById('minerSlider');
+        container.innerHTML = '';
+        miners.forEach((m, idx) => {
+            let canClaim = m.active && (!m.lastClaim || (Date.now() - m.lastClaim) >= 86400000);
+            let nextClaim = m.lastClaim ? new Date(m.lastClaim+86400000) : null;
+            let countdownStr = (m.active && m.lastClaim) ? Math.max(0, Math.ceil((m.lastClaim+86400000 - Date.now())/1000)) : (m.active?'Ready':'Inactive');
+            let timerDisplay = (m.active && m.lastClaim) ? `<span class="countdown" data-miner="${idx}" data-time="${m.lastClaim+86400000}">update...</span>` : (m.active ? '🔔 Ready to claim' : '❌ Not activated');
+            let claimBtn = (m.active && canClaim) ? `<button class="btn-gold claim-miner" data-idx="${idx}">Claim ${m.claimAmount} Gold</button>` : (m.active ? '⏳ Wait 24h' : '');
+            let activateBtn = (!m.active && user.gold >= m.cost) ? `<button class="btn-gold activate-miner" data-idx="${idx}">Activate (${m.cost} Gold)</button>` : (!m.active ? `Need ${m.cost} Gold` : '');
+            container.innerHTML += `<div class="miner-card"><h3>Miner ${idx+1} ⛏️ (+${m.claimAmount} Gold/24h)</h3><div>${timerDisplay}</div><div>${claimBtn} ${activateBtn}</div></div>`;
+        });
+        attachMinerEvents();
+        startCountdownTimers();
+    }
+
+    function attachMinerEvents() {
+        document.querySelectorAll('.claim-miner').forEach(btn => { btn.onclick = (e) => { let idx = parseInt(btn.dataset.idx); claimMinerReward(idx); }; });
+        document.querySelectorAll('.activate-miner').forEach(btn => { btn.onclick = (e) => { let idx = parseInt(btn.dataset.idx); activateMiner(idx); }; });
+    }
+    function activateMiner(idx) {
+        let user = users[sessions.currentUser];
+        let miner = user.miners[idx];
+        if(!miner.active && user.gold >= miner.cost) {
+            user.gold -= miner.cost;
+            miner.active = true;
+            miner.lastClaim = null;
+            saveUsers(); updateGoldUI(); renderMinerCards(); saveAndUpdate();
+        } else alert('Insufficient gold or already active');
+    }
+    function claimMinerReward(idx) {
+        let user = users[sessions.currentUser];
+        let miner = user.miners[idx];
+        if(miner.active && (!miner.lastClaim || (Date.now()-miner.lastClaim) >= 86400000)) {
+            user.gold += miner.claimAmount;
+            miner.lastClaim = Date.now();
+            saveUsers(); updateGoldUI(); renderMinerCards(); saveAndUpdate();
+        } else alert('Not ready yet');
+    }
+    function startCountdownTimers() { setInterval(()=>{ renderMinerCards(); }, 1000); }
+
+    // admin secret tap 5 times
+    let tapCount=0; let tapTimer;
+    document.getElementById('adminSecretTap').onclick = ()=>{
+        tapCount++; if(tapTimer) clearTimeout(tapTimer); tapTimer=setTimeout(()=>{tapCount=0;},1000);
+        if(tapCount===5){ document.getElementById('adminModal').style.display='flex'; tapCount=0; }
+    };
+    document.getElementById('verifyAdminBtn').onclick = ()=>{
+        let code = document.getElementById('adminCode').value;
+        if(code==='2011'){ document.getElementById('adminModal').style.display='none'; renderAdminPanel(); document.getElementById('adminPanel').style.display='block'; }
+        else alert('Invalid code');
+    };
+    document.getElementById('closeAdminModal').onclick = ()=> document.getElementById('adminModal').style.display='none';
+    document.getElementById('closeAdminPanelBtn').onclick = ()=> document.getElementById('adminPanel').style.display='none';
+    function renderAdminPanel() {
+        document.getElementById('adminTotalUsers').innerText = Object.keys(users).length;
+        let pendingDepositsHtml = pendingDeposits.filter(d=>d.status==='pending').map(d=> `<div>${d.email} - ₦${d.amount} <button class="approveDepositBtn" data-id="${d.id}">✅Approve</button> <button class="declineDepositBtn" data-id="${d.id}">❌Decline</button> <button class="deleteDepositBtn" data-id="${d.id}">🗑️Delete</button></div>`).join('');
+        document.getElementById('adminDepositsList').innerHTML = pendingDepositsHtml || 'No pending deposits';
+        let pendingWithdrawalsHtml = pendingWithdrawals.filter(w=>w.status==='pending').map(w=> `<div>${w.email} - ${w.goldAmount} Gold (${w.bank}) <button class="approveWithdrawBtn" data-id="${w.id}">✅</button> <button class="declineWithdrawBtn" data-id="${w.id}">❌</button> <button class="deleteWithdrawBtn" data-id="${w.id}">🗑️</button></div>`).join('');
+        document.getElementById('adminWithdrawalsList').innerHTML = pendingWithdrawalsHtml || 'No pending withdrawals';
+        document.querySelectorAll('.approveDepositBtn').forEach(btn=>btn.onclick=()=>approveDeposit(Number(btn.dataset.id)));
+        document.querySelectorAll('.declineDepositBtn').forEach(btn=>btn.onclick=()=>declineDeposit(Number(btn.dataset.id)));
+        document.querySelectorAll('.deleteDepositBtn').forEach(btn=>{ btn.onclick=()=>{pendingDeposits=pendingDeposits.filter(d=>d.id!=btn.dataset.id); savePendingDeposits(); renderAdminPanel();}});
+        document.querySelectorAll('.approveWithdrawBtn').forEach(btn=>btn.onclick=()=>approveWithdrawal(Number(btn.dataset.id)));
+        document.querySelectorAll('.declineWithdrawBtn').forEach(btn=>btn.onclick=()=>declineWithdrawal(Number(btn.dataset.id)));
+        document.querySelectorAll('.deleteWithdrawBtn').forEach(btn=>{ btn.onclick=()=>{pendingWithdrawals=pendingWithdrawals.filter(w=>w.id!=btn.dataset.id); savePendingWithdrawals(); renderAdminPanel();}});
+    }
+
+    // authentication
+    function checkInternet(){ if(!navigator.onLine) alert('No internet connection. Please check network.'); return navigator.onLine; }
+    document.getElementById('doLogin').onclick = ()=>{
+        if(!checkInternet()) return;
+        let email = document.getElementById('loginEmail').value, pwd = document.getElementById('loginPassword').value;
+        if(users[email] && users[email].password===pwd) { sessions.currentUser=email; showMainApp(); updateGoldUI(); renderMinerCards(); renderReferrals(); renderHistory(); updateLeaderboard(); }
+        else alert('Invalid credentials');
+    };
+    document.getElementById('doSignup').onclick = ()=>{
+        if(!checkInternet()) return;
+        let email = document.getElementById('signupEmail').value, pwd = document.getElementById('signupPassword').value, cp = document.getElementById('confirmPwd').value;
+        if(!email.includes('@') || pwd.length!==6 || pwd!==cp) alert('Valid email and 6-digit password match required');
+        else if(users[email]) alert('User exists');
+        else { initUserData(email, pwd); sessions.currentUser=email; showMainApp(); let urlParams = new URLSearchParams(window.location.search); let ref = urlParams.get('ref'); if(ref) handleReferralSignup(ref, email); updateGoldUI(); renderMinerCards(); renderReferrals(); renderHistory(); updateLeaderboard();}
+    };
+    document.getElementById('showSignup').onclick = ()=>{ document.getElementById('loginForm').style.display='none'; document.getElementById('signupForm').style.display='block'; };
+    document.getElementById('showLogin').onclick = ()=>{ document.getElementById('signupForm').style.display='none'; document.getElementById('loginForm').style.display='block'; };
+    function showMainApp() { document.getElementById('authSection').style.display='none'; document.getElementById('mainApp').style.display='block'; }
+    // Page navigation
+    document.querySelectorAll('.tab-btn').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active-page')); document.getElementById(btn.dataset.page).classList.add('active-page'); }; });
+    document.getElementById('dashboard').classList.add('active-page');
+    // event listeners for copy, withdrawal, deposit
+    document.getElementById('processWithdrawalBtn').onclick=()=>{ let gold=users[sessions.currentUser].gold; if(gold>=1000){ let bank=document.getElementById('bankName').value, accNo=document.getElementById('accountNumber').value, accName=document.getElementById('accountName').value; if(bank&&accNo&&accName) { submitWithdrawal(sessions.currentUser, bank, accNo, accName, 1000); users[sessions.currentUser].gold -= 1000; saveAndUpdate(); } else alert('Fill all fields'); } else alert('Minimum 1000 gold required'); };
+    document.getElementById('submitDepositBtn').onclick=()=>{ let amt=parseFloat(document.getElementById('depositAmount').value); let file=document.getElementById('depositReceipt').files[0]; if(amt>=450 && file){ let reader=new FileReader(); reader.onload=e=>{ submitDeposit(sessions.currentUser, amt, e.target.result); }; reader.readAsDataURL(file); } else alert('Min ₦450 & upload receipt'); };
+    document.getElementById('copyAccountBtn').onclick=()=>{ navigator.clipboard.writeText('8036260556 Lydia James Palmpay'); alert('Copied'); };
+    document.getElementById('copyRefLink').onclick=()=>{ navigator.clipboard.writeText(getReferralLink()); alert('Copied'); };
+    document.getElementById('bellInfo').onclick=()=>alert('This website was created by Praise');
+    // whatsapp & community
+    function attachWhatsapp(){ let links=document.querySelectorAll('[id^="customerCare"], [id^="waCommunity"]'); links.forEach(link=>{ link.onclick=(e)=>{ e.preventDefault(); if(link.id.includes('CustomerCare')) window.open('https://wa.me/2349016884934','_blank'); else window.open('https://whatsapp.com/channel/0029VbCLrm90rGiQLD7nuH03','_blank');}; }); }
+    attachWhatsapp();
+    if(localStorage.getItem('nairamine_users') && Object.keys(users).length===0) users = {}; initUserData('demo@test.com','123456'); // optional demo
+</script>
+</body>
+</html>
